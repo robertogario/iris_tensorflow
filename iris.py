@@ -127,7 +127,7 @@ print_section("Run TensorFlow Testing")
 correct_prediction = tf.equal(tf.argmax(y,1), tf.argmax(y_,1))
 accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 test_accuracy = sess.run(accuracy, feed_dict={x: X_test, y_: y_test})
-print("Test Accuracy: {0}%".format(test_accuracy * 100.0))
+print("Test Accuracy: {0:.2f}%".format(test_accuracy * 100.0))
 
 #final_b_values = sess.run(b)
 #final_W_values = sess.run(W)
