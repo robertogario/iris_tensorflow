@@ -39,41 +39,26 @@ print_section("Shuffling...")
 df=shuffle(df).reset_index(drop=True)
 print(df.head())
 
-###### Unused? ########################################
-features = df.loc[:,"sepal length":"petal width"]
-labels = df.loc[:, "class"]
-#######################################################
-
-# test data has downloaded successfully
-
-def run_tests():
-    print_section("Initial Testing...")
-    assert df.shape == (150, 5)
-    assert df.loc[0,"sepal length"] == 5.1
-    print("All Tests Passed")
-
 # Visualising
 print_section("Generating plot of data...")
 g=sns.pairplot(df, hue="class", size= 2.5)
 print("Done")
 
-print_section("Normalising...")
-
 # Condition data to have zero mean and equal variance (normalise) and measure.
-for feature in features:
-    features[feature] = (features[feature] - features[feature].mean())/features[feature].std()
+print_section("Normalising...")
+for feature in df.loc[:,"sepal length":"petal width"]:
+    df[feature] = (df[feature] - df[feature].mean())/df[feature].std()
+print("Done")
 
 # Check condition of data
+print_section("Checking data...")
 print("Averages")
-print(features.mean())
+print(df.mean())
 print("Deviations")
-print(pow(features.std(),2))
-
-print(features.head())
-
+print(pow(df.std(),2))
 
 # Create training set and test set
-print_section("Split data into traniing and testing")
+print_section("Split data into training and testing")
 training = df.sample(frac=0.7)
 testing = df.sample(frac=0.3)
 
@@ -85,7 +70,6 @@ y_test = pd.get_dummies(testing.loc[:, "class"])
 # Check size of training and test data
 print(X_train.shape, y_train.shape)
 print(X_test.shape, y_test.shape)
-#print(y_train)
 
 ########################################
 # TensorFlow section below
