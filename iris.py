@@ -8,7 +8,9 @@ Created on Sat Feb 10 14:30:37 2018
 import pandas as pd
 import tensorflow as tf
 import seaborn as sns
+import matplotlib.pyplot as plt
 from sklearn.utils import shuffle
+from sklearn.model_selection import train_test_split
 
 def print_section(text):
     print("\n")
@@ -42,6 +44,11 @@ print(df.head())
 # Visualising
 print_section("Generating plot of data...")
 g=sns.pairplot(df, hue="class", size= 2.5)
+#plt.figure(figsize=(15,15))
+#sns.heatmap(df.corr(),annot = True,fmt = ".2f",cbar = True)
+#plt.xticks(rotation = 90)
+#plt.yticks(rotation = 0)
+
 print("Done")
 
 # Condition data to have zero mean and equal variance (normalise) and measure.
@@ -59,15 +66,11 @@ print(df.mean())
 print("Deviations")
 print(pow(df.std(),2))
 
-# Create training set and test set
-print_section("Split data into training and testing")
-training = df.sample(frac=0.7)
-testing = df.sample(frac=0.3)
+# New create training and test set
+y=pd.get_dummies(df.loc[:,"class"])
+X=df.loc[:,"sepal length":"petal width"]
 
-X_train = training.loc[:,"sepal length":"petal width"]
-X_test =  testing.loc[:,"sepal length":"petal width"]
-y_train = pd.get_dummies(training.loc[:, "class"])
-y_test = pd.get_dummies(testing.loc[:, "class"])
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=42)
 
 # Check size of training and test data
 print(X_train.shape, y_train.shape)
@@ -78,8 +81,8 @@ print(X_test.shape, y_test.shape)
 ########################################
 
 # tunable parameters
-learning_rate = 0.1
-num_steps = 10500
+learning_rate = 0.5
+num_steps = 1050
 
 print_section("Setup Tensorflow Variables")
 
