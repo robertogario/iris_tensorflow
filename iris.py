@@ -78,6 +78,10 @@ print(X_test.shape, y_test.shape)
 # TensorFlow section below
 ########################################
 
+# tunable parameters
+learning_rate = 0.1
+num_steps = 10500
+
 print_section("Setup Tensorflow Variables")
 
 # placeholder for Iris data
@@ -96,7 +100,7 @@ y = tf.nn.softmax(tf.matmul(x,W) +b)
 cross_entropy = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=y_, logits=y))
 
 # each training step in gradient decent we want to minimize cross entropy
-training_step = tf.train.GradientDescentOptimizer(0.5).minimize(cross_entropy)
+training_step = tf.train.GradientDescentOptimizer(learning_rate).minimize(cross_entropy)
 
 # initialize the global variables
 init = tf.global_variables_initializer()
@@ -112,7 +116,7 @@ sess = tf.Session()
 sess.run(init)
 
 # Perform 1000 training steps
-for i in range (10000):
+for i in range (num_steps):
     sess.run(training_step, feed_dict={x: X_train, y_: y_train})
 print("Done...")
 print_section("Run TensorFlow Testing")
