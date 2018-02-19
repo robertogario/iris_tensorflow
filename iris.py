@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Fri Feb  9 14:30:37 2018
+Created on Sat Feb 10 14:30:37 2018
 
 @author: gary.roberts
 """
@@ -8,6 +8,7 @@ Created on Fri Feb  9 14:30:37 2018
 import pandas as pd
 import tensorflow as tf
 import seaborn as sns
+import numpy as np
 from sklearn.utils import shuffle
 
 def print_section(text):
@@ -50,6 +51,8 @@ for feature in df.loc[:,"sepal length":"petal width"]:
     df[feature] = (df[feature] - df[feature].mean())/df[feature].std()
 print("Done")
 
+print(df.head())
+
 # Check condition of data
 print_section("Checking data...")
 print("Averages")
@@ -86,8 +89,6 @@ y_ = tf.placeholder(tf.float32, shape=[None,3])
 W = tf.Variable(tf.zeros([4,3]))
 b = tf.Variable(tf.zeros([3]))
 
-###### OK ABOVE THIS LINE
-
 #inference model - softmax regression on a matrix multiplication
 y = tf.nn.softmax(tf.matmul(x,W) +b)
 
@@ -122,11 +123,11 @@ accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 test_accuracy = sess.run(accuracy, feed_dict={x: X_test, y_: y_test})
 print("Test Accuracy: {0}%".format(test_accuracy * 100.0))
 
-final_b_values = sess.run(b)
-final_W_values = sess.run(W)
+#final_b_values = sess.run(b)
+#final_W_values = sess.run(W)
 
-print(final_b_values)
-print(final_W_values)
+#print(final_b_values)
+#print(final_W_values)
 
 sess.close()
 
