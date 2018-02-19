@@ -8,7 +8,6 @@ Created on Sat Feb 10 14:30:37 2018
 import pandas as pd
 import tensorflow as tf
 import seaborn as sns
-import numpy as np
 from sklearn.utils import shuffle
 
 def print_section(text):
